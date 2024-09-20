@@ -13,6 +13,9 @@ ipykernel = "*"
 ephem = "*"
 matplotlib = "*"
 pydantic = "*"
+pipenv = "*"
+asyncpg = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

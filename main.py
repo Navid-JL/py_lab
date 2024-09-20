@@ -1,25 +1,24 @@
-import asyncio
-import logging
-import aiohttp
-from aiohttp import ClientSession
-from chapter_04 import fetch_status
-from util import async_timed
-from util import delay
+import time
+from concurrent.futures import ProcessPoolExecutor
 
 
-@async_timed()
-async def main() -> None:
-    async with aiohttp.ClientSession() as session:
-        api_a = fetch_status(session, 'https://example.com')
-        api_b = fetch_status(session, 'https://example.com', delay=2)
+def count(count_to: int) -> int:
+    start = time.time()
+    counter = 0
+    while counter < count_to:
+        counter += 1
+    end = time.time()
 
-        done, pending = await asyncio.wait([api_a, api_b], timeout=1)
+    print(f"Finished counting to {count_to} in {end - start}")
+    return counter
 
-        for task in pending:
-            if task is api_b:
-                print("API B too slow, cancelling")
-                task.cancel()
+
+def main() -> None:
+    with ProcessPoolExecutor() as process_pool:
+        numbers = [1, 3, 5, 22, 100_000_000]
+        for result in process_pool.map(count, numbers):
+            print(result)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
