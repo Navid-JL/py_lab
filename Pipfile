@@ -16,6 +16,10 @@ pydantic = "*"
 pipenv = "*"
 asyncpg = "*"
 python-dotenv = "*"
+scipy = "*"
+astropy = "*"
+sympy = "*"
+pillow = "*"
 
 [dev-packages]
 
